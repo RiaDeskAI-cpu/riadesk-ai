@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173b2d">
+<title>RiaDesk AI — Business Assistant</title>
+<style>
+:root{--green:#173b2d;--green2:#245640;--gold:#d5b36b;--cream:#f6f3eb;--ink:#1c2822;--muted:#718078;--line:#e3e8e2;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:#f3f5f1;color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:11px 14px;font-weight:650}
+.app{max-width:1180px;margin:auto;min-height:100vh;display:grid;grid-template-columns:245px 1fr;background:#f9faf7}
+aside{background:var(--green);color:white;padding:24px 16px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:10px;padding:0 7px}.logo{width:42px;height:42px;border-radius:14px;background:var(--gold);color:var(--green);display:grid;place-items:center;font-weight:900;font-size:20px}.brand strong{display:block;font-size:19px;letter-spacing:-.4px}.brand small{color:#d9e4dc}
+.nav{display:grid;gap:7px}.nav button{background:transparent;color:#dce8df;text-align:left;display:flex;gap:12px;align-items:center}.nav button.active,.nav button:hover{background:#ffffff1b;color:white}.nav .ico{width:22px;text-align:center}
+.sidebar-note{margin-top:auto;border:1px solid #ffffff35;border-radius:16px;padding:14px;color:#e7eee8;font-size:13px}.sidebar-note strong{display:block;color:#fff;margin-bottom:5px}
+main{padding:26px;min-width:0}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}.eyebrow{font-size:12px;letter-spacing:1.5px;color:var(--muted);font-weight:800;text-transform:uppercase}.top h1{margin:3px 0 0;font-size:28px;letter-spacing:-.8px}.top-actions{display:flex;gap:8px;align-items:center}.pill{border:1px solid var(--line);background:white;border-radius:99px;padding:9px 12px;color:var(--green);font-size:13px}
+.primary{background:var(--green);color:white}.secondary{background:#e9efe9;color:var(--green)}.gold{background:var(--gold);color:#1c3024}.danger{background:#fff0ed;color:#a43f2b}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.stat,.panel,.feature{background:white;border:1px solid var(--line);border-radius:18px;padding:17px;min-width:0}.stat .label{font-size:13px;color:var(--muted)}.stat .number{font-size:29px;font-weight:800;margin:6px 0 1px}.stat .hint{font-size:12px;color:var(--muted)}.section-title{display:flex;justify-content:space-between;align-items:center;margin:25px 0 12px;gap:10px}.section-title h2{font-size:18px;margin:0}.muted{color:var(--muted)}.dashboard-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.panel h3{margin:0 0 12px;font-size:16px}.hello{background:linear-gradient(120deg,#173b2d,#2d6548);color:white;border-radius:20px;padding:22px;display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:15px}.hello h2{font-size:23px;margin:4px 0 7px}.hello p{margin:0;color:#e1eae2;max-width:530px}.hello .orb{width:68px;height:68px;flex:0 0 auto;border:1px solid #ffffff60;border-radius:50%;display:grid;place-items:center;font-size:29px;background:#ffffff12}
+.rowitem{display:flex;align-items:flex-start;gap:11px;padding:12px 0;border-bottom:1px solid #eef1ed}.rowitem:last-child{border:0}.avatar{width:38px;height:38px;border-radius:12px;background:#edf2e9;display:grid;place-items:center;font-weight:800;color:var(--green);flex:0 0 auto}.rowitem strong{display:block}.rowitem small{color:var(--muted)}.rowitem .right{margin-left:auto;text-align:right;white-space:nowrap}.tag{display:inline-block;font-size:11px;font-weight:750;padding:4px 8px;border-radius:99px;background:#f3eddb;color:#806322}.tag.green{background:#e5f2e8;color:#27633d}.tag.gray{background:#eef0ed;color:#59675f}
+.content{display:none}.content.active{display:block}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:grid;gap:6px;margin-bottom:12px}.field label{font-size:13px;font-weight:700;color:#46544b}.field input,.field select,.field textarea{width:100%;border:1px solid #dbe2da;background:#fff;border-radius:11px;padding:11px 12px;outline-color:#789d83}.field textarea{min-height:90px;resize:vertical}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:wrap}.empty{padding:25px;text-align:center;color:var(--muted);background:#fafbf9;border:1px dashed #d5ded5;border-radius:14px}.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}.tabs button{background:#e9eee8;color:#405447}.tabs button.active{background:var(--green);color:white}.post-card{border:1px solid var(--line);border-radius:15px;padding:15px;margin:10px 0;background:#fff}.post-top{display:flex;justify-content:space-between;gap:10px}.preview{min-height:140px;border-radius:14px;background:linear-gradient(135deg,#173b2d,#43674c);color:white;padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden;background-size:cover;background-position:center}.preview h2{font-family:Georgia,serif;font-size:26px;margin:7px 0}.preview p{margin:0}.preview .smallbrand{font-size:11px;letter-spacing:2px;color:#ead6a0}.preview-wrap{max-width:430px}.photo{max-width:100%;max-height:200px;object-fit:contain;border-radius:12px}.voice-btn{border-radius:50%;width:54px;height:54px;font-size:21px;background:var(--gold);color:var(--green);box-shadow:0 5px 15px #d5b36b55}.voice-row{display:flex;gap:10px;align-items:center}.notice{background:#fff7e5;border:1px solid #f0dfb3;color:#735c20;border-radius:12px;padding:12px;font-size:13px;margin:10px 0}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#183b2d;color:#fff;padding:12px 18px;border-radius:12px;display:none;z-index:5;box-shadow:0 8px 30px #0002}.mobile-menu{display:none}
+@media(max-width:800px){.app{display:block}aside{padding:12px;position:sticky;top:0;z-index:3;flex-direction:row;align-items:center;justify-content:space-between}.brand{padding:0}.brand strong{font-size:17px}.nav{display:flex;overflow:auto;gap:3px}.nav button{padding:9px 10px;white-space:nowrap;font-size:12px}.nav .ico{display:none}.sidebar-note{display:none}main{padding:17px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-grid,.formgrid{grid-template-columns:1fr}.top h1{font-size:24px}.top-actions .pill{display:none}.hello{padding:18px}.hello h2{font-size:20px}.hello .orb{width:48px;height:48px}.full{grid-column:auto}}
+@media(max-width:440px){.nav button{padding:8px;font-size:11px}.brand small{display:none}.brand .logo{width:35px;height:35px}.top-actions button{padding:9px}.stat{padding:13px}.stat .number{font-size:25px}}
+</style></head>
+<body>
+<div class="app">
+<aside>
+ <div class="brand"><div class="logo">R</div><div><strong>RiaDesk AI</strong><small>Your business sidekick</small></div></div>
+ <nav class="nav">
+  <button class="active" data-page="home"><span class="ico">⌂</span> Home</button>
+  <button data-page="inbox"><span class="ico">✉</span> Messages</button>
+  <button data-page="calendar"><span class="ico">▦</span> Calendar</button>
+  <button data-page="studio"><span class="ico">✦</span> Creative studio</button>
+  <button data-page="content"><span class="ico">◷</span> Content approvals</button>
+  <button data-page="trends"><span class="ico">⌕</span> Trend Lab</button>
+  <button data-page="settings"><span class="ico">⚙</span> Connections</button>
+ </nav>
+ <div class="sidebar-note"><strong>Prototype mode</strong>Saved items stay in this browser on this device. WhatsApp and Instagram are priority integrations; accounts are not connected yet.</div>
+</aside>
+<main>
+ <header class="top"><div><div class="eyebrow" id="dateLine">YOUR WORKSPACE</div><h1 id="pageTitle">Good to see you.</h1></div><div class="top-actions"><span class="pill">● Local prototype</span><button class="primary" onclick="navigate('studio')">＋ Create post</button></div></header>
+
+ <section class="content active" id="page-home">
+  <div class="hello"><div><div class="eyebrow" style="color:#d9c58d">RIA DESK · READY WHEN YOU ARE</div><h2>Let's take care of business.</h2><p>Manage your client work, prepare content and keep your next steps in one place.</p><div class="actions" style="margin-top:15px"><button class="gold" onclick="navigate('inbox')">Open client desk</button><button style="background:#ffffff20;color:white;border:1px solid #ffffff50" onclick="navigate('studio')">Make a flyer</button></div></div><div class="orb">✦</div></div>
+  <div class="grid">
+   <div class="stat"><div class="label">Client messages</div><div class="number" id="msgCount">0</div><div class="hint">Saved enquiries</div></div>
+   <div class="stat"><div class="label">Appointments</div><div class="number" id="apptCount">0</div><div class="hint">Upcoming bookings</div></div>
+   <div class="stat"><div class="label">Posts to review</div><div class="number" id="postCount">0</div><div class="hint">Awaiting your decision</div></div>
+   <div class="stat"><div class="label">Reminders</div><div class="number" id="remCount">0</div><div class="hint">Saved tasks</div></div>
+  </div>
+  <div class="section-title"><h2>Quick actions</h2><span class="muted">Choose what you need</span></div>
+  <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+   <div class="feature"><div class="avatar">✉</div><h3>Capture a client enquiry</h3><p class="muted">Record a message and prepare a reply for your approval.</p><button class="secondary" onclick="navigate('inbox')">Open client desk →</button></div>
+   <div class="feature"><div class="avatar">◷</div><h3>Book your next client</h3><p class="muted">Save a booking or reminder and keep your schedule organized.</p><button class="secondary" onclick="navigate('calendar')">Open calendar →</button></div>
+   <div class="feature"><div class="avatar">✦</div><h3>Turn a photo into a campaign</h3><p class="muted">Add a product or hairstyle photo, then draft the post.</p><button class="secondary" onclick="navigate('studio')">Create content →</button></div>
+   <div class="feature"><div class="avatar">✓</div><h3>Approve your content</h3><p class="muted">Keep drafts in review until you approve them.</p><button class="secondary" onclick="navigate('content')">Review drafts →</button></div>
+  </div>
+  <div class="section-title"><h2>Coming up</h2><button class="secondary" onclick="navigate('calendar')">View calendar</button></div>
+  <div class="panel" id="homeUpcoming"></div>
+ </section>
+
+ <section class="content" id="page-inbox">
+  <div class="panel"><h3>Client desk</h3><p class="muted">Add a message you received, then let RiaDesk prepare a reply using your selected business and details. Sending is manual in this prototype.</p>
+   <div class="formgrid">
+    <div class="field"><label>Channel the message came from</label><select id="msgChannel"><option>WhatsApp</option><option>Instagram</option><option>Facebook personal</option><option>TikTok</option><option>LinkedIn</option><option>Other</option></select></div>
+    <div class="field"><label>Business</label><select id="msgBusiness"><option>Gloria Haynes, Natural Hair Specialist</option><option>EL-Naturals Therapeutic Elixir</option></select></div>
+    <div class="field"><label>Client name</label><input id="clientName" placeholder="e.g. Ama"></div>
+    <div class="field full"><label>Client's message</label><textarea id="clientText" placeholder="Paste or type the customer's message here..."></textarea></div>
+    <div class="field full"><label>Reply details (optional)</label><input id="replyDetails" placeholder="Availability, price, location, or other approved detail"></div>
+   </div><div class="actions"><button class="primary" onclick="prepareReply()">Prepare reply</button><button class="secondary" onclick="clearMessageForm()">Clear</button></div>
+   <div id="replyArea"></div>
+  </div>
+  <div class="notice"><b>Important:</b> Messages entered here are saved manually. RiaDesk is not yet connected to WhatsApp or Instagram and cannot automatically read or send messages. The next build needs authorized integrations. WhatsApp and Instagram are first priority; TikTok and LinkedIn are included for later expansion.</div>
+  <div class="section-title"><h2>Saved enquiries</h2><span class="muted">This device only</span></div><div class="panel" id="messageList"></div>
+ </section>
+
+ <section class="content" id="page-calendar">
+  <div class="panel"><h3>Add an appointment or reminder</h3>
+   <div class="formgrid">
+    <div class="field"><label>Type</label><select id="eventType"><option>Appointment</option><option>Reminder</option><option>Business task</option></select></div>
+    <div class="field"><label>Business</label><select id="eventBusiness"><option>Gloria Haynes, Natural Hair Specialist</option><option>EL-Naturals Therapeutic Elixir</option><option>Personal</option></select></div>
+    <div class="field"><label>Title / client</label><input id="eventTitle" placeholder="e.g. Loc retightening — Ama"></div>
+    <div class="field"><label>Date</label><input id="eventDate" type="date"></div>
+    <div class="field"><label>Time</label><input id="eventTime" type="time"></div>
+    <div class="field"><label>Duration</label><select id="eventDuration"><option>30 minutes</option><option selected>1 hour</option><option>90 minutes</option><option>2 hours</option><option>3 hours</option></select></div>
+    <div class="field full"><label>Notes</label><textarea id="eventNotes" placeholder="Phone number, service, location, or what you need to remember"></textarea></div>
+   </div><button class="primary" onclick="addEvent()">Save to RiaDesk</button>
+   <div class="notice">This prototype saves events on this device; it does not yet sync with Google Calendar or send push notifications.</div>
+  </div>
+  <div class="section-title"><h2>Appointments & reminders</h2><button class="secondary" onclick="exportCalendar()">Export calendar file</button></div><div class="panel" id="eventList"></div>
+ </section>
+
+ <section class="content" id="page-studio">
+  <div class="panel"><h3>Creative studio</h3><p class="muted">Upload a photo, choose a business and prepare a flyer draft. The first version creates a branded layout and caption template; advanced AI image editing can be connected in a later build.</p>
+   <div class="formgrid">
+    <div class="field"><label>Brand</label><select id="brandSelect" onchange="updateFlyerBrand()"><option value="hair">Gloria Haynes, Natural Hair Specialist</option><option value="oil">EL-Naturals Therapeutic Elixir</option></select></div>
+    <div class="field"><label>Campaign goal</label><select id="campaignGoal"><option>Promote a service</option><option>Promote a product</option><option>Educate my audience</option><option>Seasonal campaign</option><option>Client testimonial</option></select></div>
+    <div class="field"><label>Headline</label><input id="flyerHeadline" value="Healthy Locs. Intentional Care."></div>
+    <div class="field"><label>Offer / detail</label><input id="flyerOffer" placeholder="e.g. Book your loc maintenance"></div>
+    <div class="field full"><label>Photo</label><input id="photoInput" type="file" accept="image/*" onchange="loadPhoto(event)"><img id="photoPreview" class="photo" style="display:none" alt="Your selected photo"></div>
+    <div class="field full"><label>Caption notes</label><textarea id="captionNotes" placeholder="What should the post say? Include any approved price, booking instruction or campaign detail."></textarea></div>
+   </div>
+   <div class="preview-wrap"><div class="preview" id="flyerPreview"><div class="smallbrand" id="flyerBrand">GLORIA HAYNES, NATURAL HAIR SPECIALIST</div><h2 id="previewHeadline">Healthy Locs. Intentional Care.</h2><p id="previewOffer">Care that honours your crown.</p><p style="font-size:10px;letter-spacing:1px;margin-top:18px;color:#ead6a0">BOOK · CONNECT · GLOW</p></div></div>
+   <div class="actions" style="margin-top:14px"><button class="primary" onclick="makeDraft()">Prepare post for approval</button><button class="secondary" onclick="downloadFlyer()">Download flyer preview</button><button class="secondary" onclick="speak('Your creative studio is ready. Add a photo, edit the headline, then prepare the post for approval.')">🔊 Read instructions</button></div>
+   <div id="studioMessage"></div>
+  </div>
+ </section>
+
+ <section class="content" id="page-content">
+  <div class="panel"><h3>Content approval desk</h3><p class="muted">Nothing is published automatically. Approve a draft, request changes by editing in the Creative Studio, or reject it.</p><div class="tabs"><button class="active" onclick="filterPosts('All',this)">All</button><button onclick="filterPosts('Needs review',this)">Needs review</button><button onclick="filterPosts('Approved',this)">Approved</button><button onclick="filterPosts('Rejected',this)">Rejected</button></div><div id="postList"></div></div>
+ </section>
+
+
+ <section class="content" id="page-trends">
+  <div class="hello"><div><div class="eyebrow" style="color:#d9c58d">RESEARCH · IDEAS · OPPORTUNITIES</div><h2>Find what your audience needs.</h2><p>Explore loc-care conversations, natural hair questions, content opportunities and ingredient research. These search links open public web results; live AI research will be added in a connected version.</p></div><div class="orb">⌕</div></div>
+  <div class="panel">
+   <h3>What would you like to investigate?</h3>
+   <div class="formgrid">
+    <div class="field"><label>Research area</label><select id="trendArea"><option value="loc">Locs and natural hair community</option><option value="ingredients">Natural ingredients and hair/scalp care</option><option value="content">Social media content trends</option><option value="competitors">Salon and hair-oil business ideas</option><option value="calendar">Upcoming holidays and awareness campaigns</option></select></div>
+    <div class="field"><label>Audience / market</label><select id="trendMarket"><option value="Ghana">Ghana</option><option value="Liberia">Liberia</option><option value="West Africa">West Africa</option><option value="Global">Global</option></select></div>
+    <div class="field full"><label>Question or opportunity you want to explore</label><textarea id="trendQuestion" placeholder="e.g. What are people with locs struggling with? What short videos could help them? Which natural hair ingredients have good evidence?"></textarea></div>
+   </div>
+   <div class="actions"><button class="primary" onclick="runTrendSearch()">Search the web</button><button class="secondary" onclick="suggestTrendIdeas()">Suggest content ideas</button><button class="secondary" onclick="speak('Trend Lab helps you explore loc-care questions, natural ingredient evidence, content ideas and seasonal campaigns.')">🔊 Read about Trend Lab</button></div>
+   <div id="trendResults"></div>
+  </div>
+  <div class="section-title"><h2>Research shortcuts</h2><span class="muted">Open public search results</span></div>
+  <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+   <div class="feature"><div class="avatar">✦</div><h3>Loc-care questions</h3><p class="muted">Find common questions about buildup, dryness, retightening, breakage, scalp care and protective styling.</p><button class="secondary" onclick="openResearch('loc')">Explore loc-care topics →</button></div>
+   <div class="feature"><div class="avatar">◉</div><h3>Ingredient evidence</h3><p class="muted">Look for reliable research on botanical ingredients and distinguish traditional use from proven effects.</p><button class="secondary" onclick="openResearch('ingredients')">Research ingredients →</button></div>
+   <div class="feature"><div class="avatar">▶</div><h3>Content formats</h3><p class="muted">Explore short-form video ideas, hooks, tutorials and creator conversations around natural hair.</p><button class="secondary" onclick="openResearch('content')">Explore content →</button></div>
+   <div class="feature"><div class="avatar">▦</div><h3>Campaign calendar</h3><p class="muted">Find upcoming relevant holidays, awareness dates and seasonal promotional opportunities.</p><button class="secondary" onclick="openResearch('calendar')">Find campaign dates →</button></div>
+  </div>
+  <div class="section-title"><h2>Starter ideas for your brands</h2></div>
+  <div class="panel">
+   <div class="rowitem"><div class="avatar">01</div><div><strong>“Loc Myth vs. Fact”</strong><small>Short videos answering one question at a time: washing locs, lint, buildup, moisture and retightening. Check claims against reliable sources before posting.</small></div></div>
+   <div class="rowitem"><div class="avatar">02</div><div><strong>“What I noticed during a loc consultation”</strong><small>Explain common maintenance issues without exposing a client's identity or making a diagnosis.</small></div></div>
+   <div class="rowitem"><div class="avatar">03</div><div><strong>“Ingredient spotlight”</strong><small>Introduce one ingredient, its traditional use, what evidence exists, and what is still uncertain. Avoid presenting hair-growth or medical claims as proven without adequate evidence.</small></div></div>
+   <div class="rowitem"><div class="avatar">04</div><div><strong>“Your loc-care routine, simplified”</strong><small>A practical weekly or monthly care checklist, adjusted for loc maturity, scalp needs and professional advice where needed.</small></div></div>
+   <div class="rowitem"><div class="avatar">05</div><div><strong>“Ask a loc specialist”</strong><small>Invite followers to submit questions, then turn the most useful answers into short educational posts and approved FAQs.</small></div></div>
+   <div class="notice">Trend Lab starter ideas are suggestions, not verified claims about what is trending today. Use the research shortcuts to check current conversations and sources before building a campaign.</div>
+  </div>
+ </section>
+
+ <section class="content" id="page-settings">
+  <div class="panel"><h3>Business profiles</h3><p class="muted">RiaDesk uses these details when drafting customer replies and content. Review them carefully before relying on generated copy.</p>
+   <div class="formgrid">
+    <div class="field"><label>Hair business name</label><input id="settingHair" value="Gloria Haynes, Natural Hair Specialist"></div>
+    <div class="field"><label>Hair booking notice</label><input id="settingBooking" value="Book at least 1 hour ahead"></div>
+    <div class="field"><label>Hair services</label><textarea id="settingServices">Loc maintenance, palm rolling, crochet retightening/interlocking, loc repairs and reattachment, deep wash and scalp care.</textarea></div>
+    <div class="field"><label>Hair contact / location notes</label><textarea id="settingHairContact" placeholder="Add the contact and address you want replies to use"></textarea></div>
+    <div class="field"><label>Product business name</label><input id="settingOil" value="EL-Naturals Therapeutic Elixir"></div>
+    <div class="field"><label>Brand tagline</label><input id="settingTagline" value="Glow Naturally, Heal Deeply."></div>
+    <div class="field"><label>50 ml oil price (Ghana)</label><input id="price50" value="GH₵200"></div>
+    <div class="field"><label>100 ml oil price (Ghana)</label><input id="price100" value="GH₵350"></div>
+    <div class="field full"><label>Product information / approved wording</label><textarea id="settingProduct">Epic Growth Hair Oil is a hair and scalp oil. Use as directed in the product aftercare instructions. Avoid promising guaranteed growth or medical cures.</textarea></div>
+   </div><button class="primary" onclick="saveSettings()">Save business details</button>
+  </div>
+  <div class="section-title"><h2>Voice assistant</h2></div><div class="panel"><div class="voice-row"><button class="voice-btn" onclick="startVoice()" title="Use voice input">🎙</button><div><strong>Talk to RiaDesk</strong><div class="muted" id="voiceStatus">Tap the microphone and speak. Voice recognition depends on your browser.</div></div></div><div class="field" style="margin-top:14px"><label>Or type a command</label><input id="commandInput" placeholder="e.g. Show my appointments"></div><div class="actions"><button class="primary" onclick="runCommand()">Run command</button><button class="secondary" onclick="speak(document.getElementById('voiceStatus').textContent)">Test spoken response</button></div><div id="commandResult"></div>
+   <div class="notice">For safety, this prototype does not continuously listen in the background, access other apps, send messages, or publish posts. Those require secure integrations and explicit permissions.</div>
+  </div>
+  <div class="section-title"><h2>Priority messaging & social channels</h2></div><div class="panel">
+   <div class="notice"><b>Connection status:</b> These are setup placeholders, not active connections. RiaDesk cannot link an account just by entering a phone number or password. A real version must use each platform's authorized sign-in, permissions and APIs.</div>
+   <div class="rowitem"><div class="avatar">◉</div><div><strong>WhatsApp — highest priority</strong><small>For the real integration, choose WhatsApp Business Platform/Cloud API or a supported provider. Personal WhatsApp chats are not automatically accessible to a third-party app.</small></div><div class="right"><span class="tag">Priority 1</span></div></div>
+   <div class="rowitem"><div class="avatar">◎</div><div><strong>Instagram — highest priority</strong><small>Requires an eligible account type, approved permissions and supported messaging access.</small></div><div class="right"><span class="tag">Priority 2</span></div></div>
+   <div class="rowitem"><div class="avatar">♪</div><div><strong>TikTok</strong><small>Content publishing and inbox features depend on approved API access; support is not the same for every account.</small></div><div class="right"><span class="tag gray">Next</span></div></div>
+   <div class="rowitem"><div class="avatar">in</div><div><strong>LinkedIn</strong><small>Consider later for professional presence and supported publishing permissions.</small></div><div class="right"><span class="tag gray">Later</span></div></div>
+   <div class="rowitem"><div class="avatar">f</div><div><strong>Facebook personal profile</strong><small>Lower priority. Personal profile messages have restrictions; do not assume they can be integrated like a Facebook Page inbox.</small></div><div class="right"><span class="tag gray">Optional</span></div></div>
+   <div class="actions" style="margin-top:14px"><button class="primary" onclick="toast('Account linking needs a secure backend and official authorization flow.')">Plan account connections</button><button class="secondary" onclick="navigate('trends')">Open Trend Lab</button></div>
+  </div>
+  <div class="section-title"><h2>Data & privacy</h2></div><div class="panel"><p class="muted">Prototype data is stored in this browser's local storage. It is not a secure cloud database and will not automatically appear on another device.</p><div class="actions"><button class="secondary" onclick="exportData()">Export my data</button><button class="danger" onclick="clearAll()">Clear all prototype data</button></div></div>
+ </section>
+ <footer class="muted" style="font-size:12px;margin:25px 0 5px">RiaDesk AI · Updated prototype · Trend Lab opens public searches; live account connections and cloud calendar are not yet enabled.</footer>
+</main></div><div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+const defaults={events:[],messages:[],posts:[],settings:{}};
+let db=loadDB(),postFilter='All',selectedPhoto='';
+function loadDB(){try{return {...defaults,...JSON.parse(localStorage.getItem('riadesk_v1')||'{}')}}catch(e){return {...defaults}}}
+function saveDB(){localStorage.setItem('riadesk_v1',JSON.stringify(db));renderAll()}
+function toast(s){const t=$('toast');t.textContent=s;t.style.display='block';setTimeout(()=>t.style.display='none',2300)}
+function navigate(page){document.querySelectorAll('.content').forEach(x=>x.classList.remove('active'));$('page-'+page).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));const names={home:'Good to see you.',inbox:'Messages',calendar:'Appointments & reminders',studio:'Creative studio',content:'Content approvals',trends:'Trend Lab',settings:'Connections & setup'};$('pageTitle').textContent=names[page];if(page==='content')renderPosts();if(page==='calendar')renderEvents();if(page==='inbox')renderMessages();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>navigate(b.dataset.page));
+$('dateLine').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}).toUpperCase();
+function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmtDate(d,t){if(!d)return 'Date not set';let date=new Date(d+'T'+(t||'12:00'));return date.toLocaleString(undefined,{month:'short',day:'numeric',hour:t?'numeric':undefined,minute:t?'2-digit':undefined})}
+function addEvent(){let title=$('eventTitle').value.trim(),date=$('eventDate').value;if(!title||!date){toast('Add a title and date first.');return}db.events.push({id:Date.now(),type:$('eventType').value,business:$('eventBusiness').value,title,date,time:$('eventTime').value,duration:$('eventDuration').value,notes:$('eventNotes').value});saveDB();$('eventTitle').value='';$('eventNotes').value='';toast('Saved to RiaDesk on this device.')}
+function renderEvents(){let arr=[...db.events].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));$('eventList').innerHTML=arr.length?arr.map(e=>`<div class="rowitem"><div class="avatar">${e.type==='Appointment'?'◷':'✓'}</div><div><strong>${escapeHTML(e.title)}</strong><small>${escapeHTML(e.business)} · ${escapeHTML(e.type)} · ${escapeHTML(e.duration||'')}</small>${e.notes?`<div class="muted">${escapeHTML(e.notes)}</div>`:''}</div><div class="right"><strong>${escapeHTML(fmtDate(e.date,e.time))}</strong><br><button class="danger" style="padding:5px 8px;margin-top:6px" onclick="removeEvent(${e.id})">Delete</button></div></div>`).join(''):'<div class="empty">No appointments or reminders yet. Add one above.</div>'}
+function removeEvent(id){db.events=db.events.filter(e=>e.id!==id);saveDB();toast('Item deleted.')}
+function renderMessages(){$('messageList').innerHTML=db.messages.length?[...db.messages].reverse().map(m=>`<div class="rowitem"><div class="avatar">${escapeHTML((m.name||'?')[0].toUpperCase())}</div><div><strong>${escapeHTML(m.name||'Client')} · ${escapeHTML(m.channel||'Manual entry')} · ${escapeHTML(m.business)}</strong><small>${escapeHTML(m.date)}</small><div>${escapeHTML(m.text)}</div>${m.reply?`<div class="notice"><b>Draft reply:</b> ${escapeHTML(m.reply)}</div>`:''}</div><div class="right"><button class="danger" style="padding:5px 8px" onclick="removeMessage(${m.id})">Delete</button></div></div>`).join(''):'<div class="empty">No saved enquiries yet. Add a client message above.</div>'}
+function removeMessage(id){db.messages=db.messages.filter(m=>m.id!==id);saveDB();toast('Enquiry deleted.')}
+function prepareReply(){let business=$('msgBusiness').value,name=$('clientName').value.trim()||'there',msg=$('clientText').value.trim(),details=$('replyDetails').value.trim();if(!msg){toast('Paste or type the client message first.');return}let reply;if(business.includes('EL-Naturals')){let p50=(db.settings.price50||$('price50').value||'GH₵200'),p100=(db.settings.price100||$('price100').value||'GH₵350');reply=`Hello ${name}, thank you for reaching out to EL-Naturals Therapeutic Elixir. Our Epic Growth Hair Oil is available in 50 ml (${p50}) and 100 ml (${p100}) sizes in Ghana. ${details?details+' ':''}Let me know which size you are interested in, and I’ll help you with the next step.`}else{reply=`Hello ${name}, thank you for reaching out to Gloria Haynes, Natural Hair Specialist. I offer natural loc care including loc maintenance, retightening, repairs and deep-wash/scalp-care services. ${details?details+' ':''}Please tell me which service you need and your preferred date so we can discuss availability. Bookings should be made at least one hour ahead.`}let channel=$('msgChannel').value;let m={id:Date.now(),channel,business,name,text:msg,reply,date:new Date().toLocaleString()};db.messages.push(m);saveDB();$('replyArea').innerHTML=`<div class="post-card"><span class="tag green">Reply draft ready</span><p id="draftReply">${escapeHTML(reply)}</p><div class="actions"><button class="primary" onclick="copyText(${JSON.stringify(reply).replace(/</g,'\\u003c')})">Copy reply</button><button class="secondary" onclick="speak(${JSON.stringify(reply).replace(/</g,'\\u003c')})">🔊 Read aloud</button></div><p class="muted" style="font-size:12px">Review facts and availability before sending this to the client.</p></div>`;$('clientText').value='';toast('Reply draft saved for review.')}
+function clearMessageForm(){$('clientName').value='';$('clientText').value='';$('replyDetails').value='';$('replyArea').innerHTML=''}
+function copyText(s){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(s).then(()=>toast('Copied. Paste it into your messaging app.')).catch(()=>prompt('Copy this reply:',s));else prompt('Copy this reply:',s)}
+function updateFlyerBrand(){let oil=$('brandSelect').value==='oil';$('flyerBrand').textContent=oil?'EL-NATURALS THERAPEUTIC ELIXIR':'GLORIA HAYNES, NATURAL HAIR SPECIALIST';$('flyerHeadline').value=oil?'Your Hair-Care Ritual, Elevated':'Healthy Locs. Intentional Care.';$('flyerOffer').value=oil?'Epic Growth Hair Oil · 50 ml & 100 ml':'Care that honours your crown.';$('previewHeadline').textContent=$('flyerHeadline').value;$('previewOffer').textContent=$('flyerOffer').value}
+$('flyerHeadline').addEventListener('input',()=>$('previewHeadline').textContent=$('flyerHeadline').value);
+$('flyerOffer').addEventListener('input',()=>$('previewOffer').textContent=$('flyerOffer').value);
+function loadPhoto(e){let file=e.target.files&&e.target.files[0];if(!file)return;let r=new FileReader();r.onload=()=>{selectedPhoto=r.result;$('photoPreview').src=selectedPhoto;$('photoPreview').style.display='block';$('flyerPreview').style.backgroundImage=`linear-gradient(#10271c88,#10271caa),url("${selectedPhoto}")`;toast('Photo added to your flyer preview.')} ;r.readAsDataURL(file)}
+function makeDraft(){let brand=$('brandSelect').value==='oil'?'EL-Naturals Therapeutic Elixir':'Gloria Haynes, Natural Hair Specialist',headline=$('flyerHeadline').value.trim()||'A little care goes a long way',offer=$('flyerOffer').value.trim(),notes=$('captionNotes').value.trim(),goal=$('campaignGoal').value;let caption=brand.includes('EL-Naturals')?`${headline}\n\n${notes||'Make space for a thoughtful hair-care routine with Epic Growth Hair Oil.'}\n\nAvailable in 50 ml and 100 ml sizes. Message us for ordering details.\n\nEL-Naturals Therapeutic Elixir — Glow Naturally, Heal Deeply.`:`${headline}\n\n${notes||'Healthy locs start with consistent care and the right maintenance routine.'}\n\n${offer?offer+'\n\n':''}Message Gloria Haynes, Natural Hair Specialist, to discuss your loc-care needs and book an appointment at least one hour ahead.`;let p={id:Date.now(),brand,headline,offer,caption,goal,status:'Needs review',date:new Date().toLocaleString(),photo:selectedPhoto};db.posts.push(p);saveDB();$('studioMessage').innerHTML=`<div class="notice"><b>Draft prepared.</b> Your post is waiting for your approval in Content Approval Desk.</div><div class="post-card"><strong>Caption draft</strong><p>${escapeHTML(caption).replace(/\n/g,'<br>')}</p><button class="secondary" onclick="copyText(${JSON.stringify(caption).replace(/</g,'\\u003c')})">Copy caption</button> <button class="primary" onclick="navigate('content')">Review draft</button></div>`;toast('Draft added to approval desk.')}
+function downloadFlyer(){let c=document.createElement('canvas');c.width=1080;c.height=1350;let x=c.getContext('2d');let bg=x.createLinearGradient(0,0,1080,1350);bg.addColorStop(0,'#173b2d');bg.addColorStop(1,'#42664a');x.fillStyle=bg;x.fillRect(0,0,1080,1350);if(selectedPhoto){let im=new Image();im.onload=()=>{x.globalAlpha=.35;let scale=Math.max(1080/im.width,1350/im.height);x.drawImage(im,(1080-im.width*scale)/2,(1350-im.height*scale)/2,im.width*scale,im.height*scale);x.globalAlpha=1;drawText();};im.src=selectedPhoto}else drawText();function drawText(){x.strokeStyle='#d5b36b';x.lineWidth=4;x.strokeRect(45,45,990,1260);x.textAlign='center';x.fillStyle='#ead6a0';x.font='bold 30px Arial';x.fillText($('flyerBrand').textContent,540,260,900);x.fillStyle='#fffaf0';x.font='bold 76px Georgia';wrap($('flyerHeadline').value,540,520,850,95);x.fillStyle='#f4e8c7';x.font='36px Arial';wrap($('flyerOffer').value||'Message us for details',540,850,850,55);x.fillStyle='#ead6a0';x.font='bold 24px Arial';x.fillText('GLOW NATURALLY · CARE INTENTIONALLY',540,1170);let a=document.createElement('a');a.download='RiaDesk-flyer-preview.png';a.href=c.toDataURL('image/png');a.click();toast('Flyer preview downloaded.')}function wrap(text,cx,y,maxW,lineH){let words=(text||'').split(' '),line='';for(let n=0;n<words.length;n++){let test=line+words[n]+' ';if(x.measureText(test).width>maxW&&n>0){x.fillText(line,cx,y);line=words[n]+' ';y+=lineH}else line=test}x.fillText(line,cx,y)}}
+function filterPosts(f,btn){postFilter=f;document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderPosts()}
+function renderPosts(){let arr=[...db.posts].reverse().filter(p=>postFilter==='All'||p.status===postFilter);$('postList').innerHTML=arr.length?arr.map(p=>`<div class="post-card"><div class="post-top"><div><strong>${escapeHTML(p.headline)}</strong><div class="muted" style="font-size:12px">${escapeHTML(p.brand)} · ${escapeHTML(p.goal)} · ${escapeHTML(p.date)}</div></div><span class="tag ${p.status==='Approved'?'green':p.status==='Rejected'?'gray':''}">${escapeHTML(p.status)}</span></div>${p.photo?`<img src="${p.photo}" class="photo" style="margin-top:10px" alt="Post photo">`:''}<p>${escapeHTML(p.caption).replace(/\n/g,'<br>')}</p><div class="actions">${p.status==='Needs review'?`<button class="primary" onclick="setPostStatus(${p.id},'Approved')">✓ Approve</button><button class="danger" onclick="setPostStatus(${p.id},'Rejected')">Reject</button>`:''}<button class="secondary" onclick="copyText(${JSON.stringify(p.caption).replace(/</g,'\\u003c')})">Copy caption</button><button class="secondary" onclick="editPost(${p.id})">Edit in studio</button><button class="danger" onclick="deletePost(${p.id})">Delete</button></div>${p.status==='Approved'?'<div class="notice">Approved in this prototype — not published to social media.</div>':''}</div>`).join(''):'<div class="empty">No posts in this view yet. Create a draft in Creative Studio.</div>'}
+function setPostStatus(id,s){let p=db.posts.find(p=>p.id===id);if(p)p.status=s;saveDB();toast('Post marked '+s.toLowerCase()+'.')}
+function deletePost(id){db.posts=db.posts.filter(p=>p.id!==id);saveDB();toast('Draft deleted.')}
+function editPost(id){let p=db.posts.find(p=>p.id===id);if(!p)return;navigate('studio');$('brandSelect').value=p.brand.includes('EL-Naturals')?'oil':'hair';$('flyerHeadline').value=p.headline;$('flyerOffer').value=p.offer;$('captionNotes').value=p.caption;updateFlyerBrand();$('flyerHeadline').value=p.headline;$('previewHeadline').textContent=p.headline;$('flyerOffer').value=p.offer;$('previewOffer').textContent=p.offer;toast('Draft details loaded into Creative Studio.')}
+function speak(text){if(!('speechSynthesis'in window)){toast('Spoken responses are not supported in this browser.');return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(String(text));u.lang='en-GH';speechSynthesis.speak(u)}
+function startVoice(){let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$('voiceStatus').textContent='Voice recognition is unavailable in this browser. Try Chrome, or type your command.';return}let r=new SR();r.lang='en-GH';r.interimResults=false;r.maxAlternatives=1;$('voiceStatus').textContent='Listening…';r.onresult=e=>{$('commandInput').value=e.results[0][0].transcript;$('voiceStatus').textContent='Heard: '+e.results[0][0].transcript;runCommand()};r.onerror=e=>$('voiceStatus').textContent='Voice input stopped ('+e.error+'). You can type instead.';r.onend=()=>{};r.start()}
+function runCommand(){let q=$('commandInput').value.trim().toLowerCase();if(!q){toast('Type or speak a command first.');return}let answer;if(q.includes('appointment')||q.includes('calendar')||q.includes('schedule')){navigate('calendar');answer=`You have ${db.events.filter(e=>e.type==='Appointment').length} saved appointments and ${db.events.filter(e=>e.type!=='Appointment').length} reminders or tasks. Open the calendar to review them.`}else if(q.includes('message')||q.includes('client')){navigate('inbox');answer=`You have ${db.messages.length} saved client enquiries. Open the client desk to review them.`}else if(q.includes('post')||q.includes('content')||q.includes('flyer')){navigate(q.includes('approval')||q.includes('review')?'content':'studio');answer=`You have ${db.posts.filter(p=>p.status==='Needs review').length} posts awaiting review. You can create a new draft in the creative studio.`}else if(q.includes('trend')||q.includes('research')||q.includes('ingredient')){navigate('trends');answer='Trend Lab is open. Choose loc-care topics, natural ingredient research, content trends or campaign dates, then search the web.'}else if(q.includes('remind')){navigate('calendar');answer='Open the calendar to add a reminder. Give it a title and date, then save it.'}else{answer='I can help you review appointments, client enquiries, reminders, and content drafts. Try saying: show my appointments, check messages, or create a flyer.'}$('commandResult').innerHTML=`<div class="post-card">${escapeHTML(answer)}</div>`;$('voiceStatus').textContent=answer;speak(answer)}
+
+function openResearch(kind){
+ let q='';
+ if(kind==='loc') q='loc care common questions loc maintenance buildup dryness breakage natural hair community';
+ if(kind==='ingredients') q='site:pubmed.ncbi.nlm.nih.gov botanical ingredients hair scalp evidence review';
+ if(kind==='content') q='natural hair locs content trends TikTok Instagram creator ideas 2026';
+ if(kind==='calendar') q='Ghana Liberia upcoming holidays awareness days calendar 2026 2027';
+ if(kind==='competitors') q='natural hair loc salon customer needs service ideas Ghana Liberia';
+ window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank','noopener');
+}
+function runTrendSearch(){
+ const area=$('trendArea').value,market=$('trendMarket').value,question=$('trendQuestion').value.trim();
+ const queries={
+  loc:`locs natural hair common problems questions maintenance care ${market}`,
+  ingredients:`natural ingredients hair scalp research evidence systematic review botanicals ${market}`,
+  content:`locs natural hair TikTok Instagram content trends creator ideas 2026 ${market}`,
+  competitors:`loc specialist salon hair oil business customer needs opportunities ${market}`,
+  calendar:`upcoming holidays awareness days events marketing calendar 2026 2027 ${market}`
+ };
+ const q=(question?question+' ':'')+queries[area];
+ $('trendResults').innerHTML=`<div class="post-card"><strong>Research search prepared</strong><p class="muted">Search the public web for: ${escapeHTML(q)}</p><div class="actions"><button class="primary" onclick="window.open('https://www.google.com/search?q='+encodeURIComponent(${JSON.stringify(q)}),'_blank','noopener')">Search Google</button><button class="secondary" onclick="window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(${JSON.stringify(q)}),'_blank','noopener')">Search YouTube</button><button class="secondary" onclick="copyText(${JSON.stringify(q).replace(/</g,'\\u003c')})">Copy research question</button></div><p class="muted" style="font-size:12px">This prototype opens search results; it does not automatically crawl, verify or summarize current trends. A later AI research service can do that with source links and dated findings.</p></div>`;
+}
+function suggestTrendIdeas(){
+ const area=$('trendArea').value,market=$('trendMarket').value;
+ const ideas={
+ loc:[`“3 signs your locs may need a maintenance check” (${market})`,`“Loc care myth vs fact” short video series`,`“What to expect at a loc consultation” carousel`,`“How I approach a deep wash and scalp-care appointment” behind-the-scenes video`],
+ ingredients:[`Ingredient spotlight: what is known and not known about one botanical`,`“Traditional use vs scientific evidence” educational series`,`Explain how to patch-test a new topical product safely`,`A transparent ingredient glossary for your hair oil audience`],
+ content:[`Start with a question in the first 2 seconds, then answer it clearly`,`Turn one common client question into a 20–30 second tutorial`,`Make a before/after only with client permission and honest context`,`Invite followers to vote on the next loc-care question`],
+ competitors:[`A clear service menu with starting prices or consultation steps`,`A simple first-visit guide for new loc clients`,`A customer FAQ for hair oil sizes, use and ordering`,`A referral or maintenance-reminder programme`],
+ calendar:[`Plan a monthly educational theme rather than posting only on holidays`,`Check relevant Ghana and Liberia dates before announcing a campaign`,`Prepare a small batch of posts before a product or service promotion`,`Use awareness campaigns respectfully and avoid unsupported health claims`]
+ };
+ $('trendResults').innerHTML=`<div class="post-card"><strong>Starter ideas for ${escapeHTML(market)}</strong><ul>${ideas[area].map(x=>`<li>${escapeHTML(x)}</li>`).join('')}</ul><p class="muted" style="font-size:12px">These are brainstorming ideas, not a live trend report. Use Search the web to validate audience interest.</p><button class="primary" onclick="navigate('studio')">Turn an idea into a post</button></div>`;
+}
+
+function saveSettings(){db.settings={hair:$('settingHair').value,booking:$('settingBooking').value,services:$('settingServices').value,hairContact:$('settingHairContact').value,oil:$('settingOil').value,tagline:$('settingTagline').value,price50:$('price50').value,price100:$('price100').value,product:$('settingProduct').value};saveDB();toast('Business details saved on this device.')}
+function exportData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='riadesk-backup.json';a.click();URL.revokeObjectURL(a.href)}
+function exportCalendar(){let lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//RiaDesk AI//EN'];db.events.forEach(e=>{let dt=(e.date||'').replaceAll('-','')+(e.time?e.time.replace(':','')+'00':'T120000');lines.push('BEGIN:VEVENT','UID:'+e.id+'@riadesk.local','DTSTART:'+dt,'SUMMARY:'+String(e.title).replace(/[,;]/g,' '),'DESCRIPTION:'+String(e.business+' '+(e.notes||'')).replace(/[,;]/g,' '),'END:VEVENT')});lines.push('END:VCALENDAR');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([lines.join('\r\n')],{type:'text/calendar'}));a.download='riadesk-calendar.ics';a.click();URL.revokeObjectURL(a.href);toast('Calendar file exported. Import it into a calendar app.')}
+function clearAll(){if(confirm('Delete all RiaDesk prototype messages, events, drafts and saved business details from this browser?')){localStorage.removeItem('riadesk_v1');db=loadDB();renderAll();toast('Prototype data cleared.')}}
+function renderAll(){$('msgCount').textContent=db.messages.length;$('apptCount').textContent=db.events.filter(e=>e.type==='Appointment').length;$('postCount').textContent=db.posts.filter(p=>p.status==='Needs review').length;$('remCount').textContent=db.events.filter(e=>e.type!=='Appointment').length;renderEvents();renderMessages();renderPosts();let upcoming=[...db.events].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,4);$('homeUpcoming').innerHTML=upcoming.length?upcoming.map(e=>`<div class="rowitem"><div class="avatar">${e.type==='Appointment'?'◷':'✓'}</div><div><strong>${escapeHTML(e.title)}</strong><small>${escapeHTML(e.business)} · ${escapeHTML(e.type)}</small></div><div class="right">${escapeHTML(fmtDate(e.date,e.time))}</div></div>`).join(''):'<div class="empty">Your upcoming appointments and reminders will appear here.</div>'}
+function initSettings(){let s=db.settings;if(s.hair)$('settingHair').value=s.hair;if(s.booking)$('settingBooking').value=s.booking;if(s.services)$('settingServices').value=s.services;if(s.hairContact)$('settingHairContact').value=s.hairContact;if(s.oil)$('settingOil').value=s.oil;if(s.tagline)$('settingTagline').value=s.tagline;if(s.price50)$('price50').value=s.price50;if(s.price100)$('price100').value=s.price100;if(s.product)$('settingProduct').value=s.product}
+initSettings();renderAll();
+</script></body></html>
